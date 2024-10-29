@@ -61,7 +61,7 @@ class App
 
         $exception = $this->exception->addTripException($data);
 
-        if ($exception['status'] === 'error') {
+        if (isset($exception) && $exception['status'] === 'error') {
             echo $exception;
             return;
         }
@@ -99,6 +99,7 @@ class App
         $dataAll = $this->tripsModel->getTripsAllData();
 
         echo json_encode([
+            'status' => 'ok',
             'dataAll' => $dataAll,
             'dataCouriers' => $dataCouriers
         ]);

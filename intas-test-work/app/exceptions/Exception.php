@@ -29,15 +29,15 @@ class Exception
         $regionId = $data['region'] ?? null;
         $courierId = $data['courier'] ?? null;
 
-        if ($regionId && $courierId) {
+        if (!$regionId && !$courierId) {
             return json_encode(["status" => "error", "message" => "ошибка добавления маршрута !"]);
         }
 
-        $regionId = filter_var($regionId, FILTER_SANITIZE_STRING);
-        $courierId = filter_var($courierId, FILTER_SANITIZE_STRING);
+        $regionId = filter_var($regionId, FILTER_VALIDATE_INT);
+        $courierId = filter_var($courierId, FILTER_VALIDATE_INT);
 
-        if (!(is_int($regionId) && is_int($courierId))) {
-            return json_encode(["status" => "error", "message" => "ошибка добавления маршрута !"]);
+        if (!$regionId && !$courierId) {
+            return json_encode(["status" => "error22", "message" => "ошибка добавления маршрута !"]);
         }
 
         return null;
