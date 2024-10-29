@@ -1,8 +1,8 @@
-# использовался MAMP (Apach, Mysql)
+## использовался MAMP (Apach, Mysql)
 
-# БД intas_db_test_work
+## БД intas_db_test_work
 
-# порт http://localhost:8080
+## порт http://localhost:8080
 
 
 создание БД ----------
