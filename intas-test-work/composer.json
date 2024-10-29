@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "app\\": "app",
+            "helpers\\": "helpers",
+            "core\\": "core",
+            "routes\\": "routes"
+        }
+    },
+  "require": {
+    "ext-pdo": "*"
+  }
+}
