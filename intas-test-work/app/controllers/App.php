@@ -158,7 +158,11 @@ class App
 
         $param = $url[1];
 
-        $data = $this->tripsModel->getTripsByDate($param);
+        if ($param === 'all') {
+            $data = $this->tripsModel->getTripsAllData();
+        } else {
+            $data = $this->tripsModel->getTripsByDate($param);
+        }
 
         echo json_encode(["status" => "ok", "data" => $data]);
     }

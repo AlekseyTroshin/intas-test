@@ -17,6 +17,7 @@
                 <div class="form-option">
                     <p class="form-label">Дата выезда из Москвы</p>
                     <select class="form-select selected-date-select">
+                        <option value="all" selected>Все</option>
                         <?php foreach ($daysDate as $day) { ?>
                             <?= "<option value=" . $day["departure_date"] . ">" . $day["departure_date"] . "</option>" ?>
                         <?php } ?>

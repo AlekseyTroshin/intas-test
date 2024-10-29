@@ -42,11 +42,17 @@ function initCheckSelectedDate() {
     let selectedDateSelect = selectDate.querySelector('.selected-date-select')
     let checkDate = selectDate.querySelector('.check-date')
 
-
     selectedDateSelect.addEventListener('change', e => {
         let selectedDate = selectedDateSelect.options[selectedDateSelect.selectedIndex].textContent
         let selectDateInput  = selectDate.querySelector('.select-date-input')
         selectDateInput.classList.remove('warning')
+
+        turnOffSortActive()
+
+        if (selectedDate === 'Все') {
+            turnOnSortActive()
+            selectedDate = selectedDateSelect.options[selectedDateSelect.selectedIndex].value
+        }
 
         querySelectedDate(selectedDate)
     })
@@ -65,6 +71,7 @@ function initCheckSelectedDate() {
         })
 
         if (!selectDateInput.classList.contains('warning')) {
+            turnOffSortActive()
             querySelectedDate(selectDateInput.value)
         }
     })
@@ -201,6 +208,7 @@ function initAddTrips() {
     })
 
     createTrip.addEventListener('click', e => {
+        turnOnSortActive()
         queryAddTrips()
     })
 }
@@ -271,6 +279,7 @@ function initTable() {
     thead.addEventListener('click', e => {
         let target = e.target
         if (!target.classList.contains('sort')) return
+        if (target.classList.contains('sort-off')) return
         e.stopPropagation()
 
         let sortElements = Array.from(thead.querySelectorAll('th'));
@@ -433,6 +442,24 @@ function getRandomIndex(arr) {
 
 function isValidDateFormatYMD(date) {
     return /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(date);
+}
+
+function turnOffSortActive() {
+    let table = document.getElementById('table')
+    let thead = table.querySelector('thead')
+    let sorts = thead.querySelectorAll('.sort')
+    let active = thead.querySelector('.active')
+
+    active && active.classList.remove('active')
+    sorts.forEach( item => item.classList.add('sort-off'))
+}
+
+function turnOnSortActive() {
+    let table = document.getElementById('table')
+    let thead = table.querySelector('thead')
+    let sorts = thead.querySelectorAll('.sort')
+
+    sorts.forEach( item => item.classList.remove('sort-off'))
 }
 
 init()
