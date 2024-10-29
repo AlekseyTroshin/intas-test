@@ -66,8 +66,8 @@ class App
             return;
         }
 
-        $regionId = $data['region'] ?? null;
-        $courierId = $data['courier'] ?? null;
+        $regionId = $data['region'];
+        $courierId = $data['courier'];
 
         $region = $this->regionsModel->getRegionById($regionId);
 
@@ -126,14 +126,24 @@ class App
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
 
-        $name = $data['nsf'] ?? null;
+        $exception = $this->exception->createCourierException($data);
+
+        if (isset($exception) && $exception['status'] === 'error') {
+            echo $exception;
+            return;
+        }
+
+        $name = $data['nsf'];
 
         $data = $this->couriersModel->createCourier([
             'name' => $name,
             'is_busy' => NULL,
         ]);
 
-        echo json_encode($data);
+        echo json_encode([
+            "status" => "ok",
+            "data" => $data
+        ]);
     }
 
 }

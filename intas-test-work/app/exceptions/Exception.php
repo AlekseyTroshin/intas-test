@@ -37,7 +37,24 @@ class Exception
         $courierId = filter_var($courierId, FILTER_VALIDATE_INT);
 
         if (!$regionId && !$courierId) {
-            return json_encode(["status" => "error22", "message" => "ошибка добавления маршрута !"]);
+            return json_encode(["status" => "error", "message" => "ошибка добавления маршрута !"]);
+        }
+
+        return null;
+    }
+
+    public function createCourierException($data)
+    {
+        $nsf = $data['nsf'] ?? null;
+
+        if (!$nsf) {
+            return json_encode(["status" => "error", "message" => "ошибка найма нового курьера !"]);
+        }
+
+        $nsf = filter_var($nsf, FILTER_SANITIZE_STRING);
+
+        if (!$nsf) {
+            return json_encode(["status" => "error", "message" => "ошибка найма нового курьера !"]);
         }
 
         return null;

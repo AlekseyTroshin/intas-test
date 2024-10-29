@@ -172,7 +172,6 @@ function queryAddTrips() {
     let regionId = formRegions.options[formRegions.selectedIndex].value
     let courierId = formCouriers.options[formCouriers.selectedIndex].value
 
-
     fetchData(http + '/add-trip', {
         method: 'POST',
         headers: {
