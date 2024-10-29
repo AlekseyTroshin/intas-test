@@ -312,6 +312,11 @@ function drawTable(data, thIndex) {
 
     removeElement(table, tbody)
 
+    if (String(data) === "") {
+        createNoDataTbodyAddToTable(table)
+        return
+    }
+
     createTbodyAddToTable(data, table, thIndex)
 }
 
@@ -343,6 +348,15 @@ async function fetchData(url, method = {}) {
     }
 }
 
+function createNoDataTbodyAddToTable(table) {
+    let tbody = newElement('tbody', 'table-clear')
+    let div = newElement('div')
+
+    div.textContent = 'Нету данных для отображения';
+
+    addElement(tbody, div)
+    addElement(table, tbody)
+}
 function createTbodyAddToTable(data, table, thIndex) {
     let tbody = newElement('tbody')
 
