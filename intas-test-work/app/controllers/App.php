@@ -37,10 +37,10 @@ class App
 
     public function sort($url)
     {
-        $data = $this->exception->sortException($url);
+        $exception = $this->exception->sortException($url);
 
-        if ($data['status'] === 'error') {
-            echo $data;
+        if ($exception['status'] === 'error') {
+            echo $exception;
             return;
         }
 
@@ -58,6 +58,13 @@ class App
 
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
+
+        $exception = $this->exception->addTripException($data);
+
+        if ($exception['status'] === 'error') {
+            echo $exception;
+            return;
+        }
 
         $regionId = $data['region'] ?? null;
         $courierId = $data['courier'] ?? null;

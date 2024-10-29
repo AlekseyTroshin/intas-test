@@ -181,8 +181,9 @@ function queryAddTrips() {
         body: JSON.stringify({ region: regionId, courier: courierId })
     })
         .then(data => {
-            drawTable(data['dataAll'])
-            drawOptionCouriers(data['dataCouriers'])
+            console.log(data)
+            // drawTable(data['dataAll'])
+            // drawOptionCouriers(data['dataCouriers'])
         })
 }
 
