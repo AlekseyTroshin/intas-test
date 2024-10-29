@@ -181,7 +181,7 @@ function queryAddTrips() {
         body: JSON.stringify({ region: regionId, courier: courierId })
     })
         .then(data => {
-            drawTable(Object.entries(data['dataAll']))
+            drawTable(data['dataAll'])
             drawOptionCouriers(data['dataCouriers'])
         })
 }
@@ -248,8 +248,7 @@ function initTable() {
 function queryTableSort(attrParam, attrSort, thIndex) {
     fetchData(http + '/sort/' + attrParam + '/' + attrSort)
         .then(data => {
-            data = Object.entries(data)
-            drawTable(data, thIndex)
+            drawTable(data.data, thIndex)
         })
 }
 
@@ -303,7 +302,7 @@ function createTbodyAddToTable(data, table, thIndex) {
     ]
     let tableDataLength = tableData.length
 
-    data.forEach(([key, value]) => {
+    data.forEach( item => {
         let tr = newElement('tr')
         let selectedTd = 'selected_td'
 
@@ -311,7 +310,7 @@ function createTbodyAddToTable(data, table, thIndex) {
             addElement(tr, newElement(
                 'td',
                 (thIndex - 1 === i) && selectedTd,
-                value[tableData[i]]
+                item[tableData[i]]
             ))
         }
 

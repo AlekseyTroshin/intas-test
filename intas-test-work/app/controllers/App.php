@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\exceptions\Exception;
 use app\models\CouriersModel;
 use app\models\RegionsModel;
 use app\models\TripsModels;
@@ -16,8 +17,11 @@ class App
 
     private $tripsModel = null;
 
+    private $exception = null;
+
     public function __construct()
     {
+        $this->exception = new Exception();
         $this->regionsModel = new RegionsModel();
         $this->couriersModel = new CouriersModel();
         $this->tripsModel = new TripsModels();
@@ -33,18 +37,24 @@ class App
 
     public function sort($url)
     {
+        $data = $this->exception->sortException($url);
+
+        if ($data['status'] === 'error') {
+            echo $data;
+            return;
+        }
+
         $param = $url[1];
         $sort = $url[2];
+
         $data = $this->tripsModel->getTripsAllDataSort($param, $sort);
-        echo json_encode($data);
+        echo json_encode(["status" => "ok", "data" => $data]);
     }
 
     public function addTrip()
     {
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
 
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
@@ -104,8 +114,6 @@ class App
     {
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
-
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
 
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);

@@ -3,6 +3,7 @@
 namespace routes;
 
 use app\controllers\App;
+use app\exceptions\Exception;
 
 class Route
 {
@@ -23,8 +24,12 @@ class Route
         $param = $url[0];
 
         if ($param === 'add-trip') {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+
             $app->addTrip();
         } else if ($param === 'create-courier') {
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+
             $app->createCourier();
         } else if ($param === 'sort') {
             $app->sort($url);
