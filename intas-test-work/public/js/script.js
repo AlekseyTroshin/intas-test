@@ -45,6 +45,8 @@ function initCheckSelectedDate() {
 
     selectedDateSelect.addEventListener('change', e => {
         let selectedDate = selectedDateSelect.options[selectedDateSelect.selectedIndex].textContent
+        let selectDateInput  = selectDate.querySelector('.select-date-input')
+        selectDateInput.classList.remove('warning')
 
         querySelectedDate(selectedDate)
     })
