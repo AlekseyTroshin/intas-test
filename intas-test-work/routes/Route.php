@@ -37,6 +37,9 @@ class Route
             $app->region($url);
         } else if ($param === 'get-all-couriers') {
             $app->getAllCouriers();
+        }
+        else if ($param === 'check-selected-date') {
+            $app->checkSelectedDate($url);
         } else {
             $app->view();
         }

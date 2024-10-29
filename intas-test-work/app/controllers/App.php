@@ -29,10 +29,11 @@ class App
 
     public function view()
     {
+        $daysDate = $this->tripsModel->getTripsDepartureDate();
         $regions = $this->regionsModel->getAllRegions();
         $couriers = $this->couriersModel->getAllCouriers();
         $dataAll = $this->tripsModel->getTripsAllData();
-        includeView('layouts/main', compact('dataAll', 'regions', 'couriers'));
+        includeView('layouts/main', compact('dataAll', 'regions', 'couriers', 'daysDate'));
     }
 
     public function sort($url)
@@ -144,6 +145,22 @@ class App
             "status" => "ok",
             "data" => $data
         ]);
+    }
+
+    public function checkSelectedDate($url)
+    {
+        $exception = $this->exception->checkSelectedDateException($url);
+
+        if ($exception['status'] === 'error') {
+            echo $exception;
+            return;
+        }
+
+        $param = $url[1];
+
+        $data = $this->tripsModel->getTripsByDate($param);
+
+        echo json_encode(["status" => "ok", "data" => $data]);
     }
 
 }

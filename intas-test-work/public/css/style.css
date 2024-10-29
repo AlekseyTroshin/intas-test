@@ -307,7 +307,8 @@ th.active.sort:before {
     margin-right: 10px;
 }
 
-.nsf-input.warning {
+.nsf-input.warning,
+.select-date-input.warning {
     border-color: red;
 }
 
@@ -347,6 +348,13 @@ button {
     font-size: 16px;
 }
 
+.select-date-input {
+    width: 200px;
+    border: 1px solid black;
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
 
 
 

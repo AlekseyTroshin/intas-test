@@ -27,9 +27,53 @@ function init() {
     initAddTrips()
     initAddCouriers()
     initCheckAllParams()
+    initCheckSelectedDate()
 }
 
 const http = 'http://localhost:8080'
+
+
+
+// =============== Selected Date
+
+function initCheckSelectedDate() {
+    let selectDate = document.getElementById('select-date')
+
+    let selectedDateSelect = selectDate.querySelector('.selected-date-select')
+    let checkDate = selectDate.querySelector('.check-date')
+
+
+    selectedDateSelect.addEventListener('change', e => {
+        let selectedDate = selectedDateSelect.options[selectedDateSelect.selectedIndex].textContent
+
+        querySelectedDate(selectedDate)
+    })
+
+    checkDate.addEventListener('click', e => {
+        let selectDate = document.getElementById('select-date')
+        let selectDateInput  = selectDate.querySelector('.select-date-input')
+
+        selectDateInput.value === '' && selectDateInput.classList.add('warning')
+        !isValidDateFormatYMD(selectDateInput.value) && selectDateInput.classList.add('warning')
+        selectDateInput.addEventListener('keydown', e => {
+            selectDateInput.value !== '' &&  selectDateInput.classList.remove('warning')
+        })
+        selectDateInput.addEventListener('blur', e => {
+            selectDateInput.value === '' &&  selectDateInput.classList.add('warning')
+        })
+
+        if (!selectDateInput.classList.contains('warning')) {
+            querySelectedDate(selectDateInput.value)
+        }
+    })
+}
+
+function querySelectedDate(selectedDate) {
+    fetchData(http + '/check-selected-date/' + selectedDate)
+        .then(data => {
+            drawTable(data.data)
+        })
+}
 
 
 
@@ -385,7 +429,9 @@ function getRandomIndex(arr) {
     return arr[randomIndex];
 }
 
-
+function isValidDateFormatYMD(date) {
+    return /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(date);
+}
 
 init()
 

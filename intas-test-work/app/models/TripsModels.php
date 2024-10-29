@@ -8,6 +8,48 @@ use PDO;
 class TripsModels extends Model
 {
 
+    public function getTripsDepartureDate()
+    {
+        $sql = "
+            SELECT
+                DISTINCT departure_date
+            FROM
+                trips
+        ";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTripsByDate($departure_date)
+    {
+        $sql = "
+            SELECT
+                r.name AS region,
+                t.departure_date AS departure_date,
+                t.arrival_date AS arrival_date,
+                t.return_date AS return_date,
+                c.name AS courier
+            FROM
+                trips AS t
+            INNER JOIN
+                regions AS r ON t.region_id = r.id
+            INNER JOIN
+                couriers AS c ON t.courier_id = c.id
+            WHERE 
+                departure_date = :departure_date
+            ORDER BY
+                t.departure_date DESC;
+        ";
+
+        $stmt = $this->connection->prepare($sql);
+        $stmt->bindParam(':departure_date', $departure_date, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getTripsAllData()
     {
         $sql = "

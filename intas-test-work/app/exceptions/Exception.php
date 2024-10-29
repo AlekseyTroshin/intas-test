@@ -60,4 +60,20 @@ class Exception
         return null;
     }
 
+
+    public function checkSelectedDateException($url)
+    {
+        if (!isset($url[1])) {
+            return json_encode(["status" => "error", "message" => "ошибка передачи даты !"]);
+        }
+
+        $param = filter_var($url[1], FILTER_SANITIZE_STRING);
+
+        if (!$param) {
+            return json_encode(["status" => "error", "message" => "ошибка  передачи даты !"]);
+        }
+
+        return null;
+    }
+
 }
